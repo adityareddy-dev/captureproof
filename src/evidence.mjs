@@ -39,10 +39,13 @@ export function captures(body) {
 
 export function paymentState(session) {
   const refs = [];
+  const requestIndex = session.events.findLastIndex(e => e.kind === 'capture_requested' && e.orderId === session.orderId && e.traceId === session.traceId);
+  const request = session.events[requestIndex];
+  let answered = !request;
   const completed = new Map();
   const failedIds = new Set();
   let failed = false, pending = false, conflict = false, latestOrder = null;
-  for (const e of session.events) {
+  for (const [index, e] of session.events.entries()) {
     if (e.kind !== 'response' || e.operation === 'create') continue;
     if (!['get', 'capture'].includes(e.operation)) continue;
     if (e.orderId !== session.orderId || e.traceId !== session.traceId) { conflict = true; continue; }
@@ -56,19 +59,37 @@ export function paymentState(session) {
         if (c.status === 'COMPLETED') {
           const unit = body.purchase_units.find(u => u.payments?.captures?.some(x => x.id === c.id));
           if (!c.id || c.amount?.value !== session.amount || c.amount?.currency_code !== 'USD' || unit?.reference_id !== session.id) conflict = true;
-          else { completed.set(c.id, e.id); refs.push(e.id); }
-        } else if (['DECLINED', 'FAILED'].includes(c.status)) { failedIds.add(c.id); failed = true; refs.push(e.id); }
-        else { pending = true; refs.push(e.id); }
+          else {
+            completed.set(c.id, e.id); refs.push(e.id);
+            if (index > requestIndex && (e.operation === 'get' || e.requestId === request?.requestId)) answered = true;
+          }
+        } else if (['DECLINED', 'FAILED'].includes(c.status)) {
+          failedIds.add(c.id); failed = true; refs.push(e.id);
+          if (index > requestIndex && (e.operation === 'get' || e.requestId === request?.requestId)) answered = true;
+        } else { pending = true; refs.push(e.id); }
       }
       if (body.status === 'COMPLETED' && !cs.length) conflict = true;
     }
     if (e.operation === 'capture' && e.httpStatus === 422) {
       const issues = body?.details?.map(d => d.issue) || [];
-      if (issues.includes('ORDER_NOT_APPROVED')) { failed = true; refs.push(e.id); }
+      if (issues.includes('ORDER_NOT_APPROVED')) {
+        failed = true; refs.push(e.id);
+        if (index > requestIndex && e.requestId === request?.requestId) answered = true;
+      }
     }
   }
   if ([...completed.keys()].some(id => failedIds.has(id)) || completed.size > 1) conflict = true;
   if (conflict) return { state: 'unresolved', reason: 'The evidence does not agree on this transaction.', evidenceIds: [...new Set(refs)], captureId: null };
+  if (!answered) {
+    const current = session.events.slice(requestIndex).filter(e =>
+      e.orderId === session.orderId && e.traceId === session.traceId && (
+        e.id === request.id ||
+        e.kind === 'transport_error' && e.requestId === request.requestId ||
+        e.kind === 'response' && e.operation === 'get'
+      ));
+    return { state: 'unresolved', reason: 'The latest capture attempt has no definitive outcome. Reconcile the order before deciding what to do.',
+      captureId: null, evidenceIds: current.map(e => e.id) };
+  }
   if (completed.size === 1 && !pending) return { state: 'captured', reason: 'A completed capture matches this order, amount and checkout.', captureId: [...completed.keys()][0], evidenceIds: [...new Set(refs)] };
   if (pending) return { state: 'unresolved', reason: 'A capture is pending or has an unrecognised state.', evidenceIds: [...new Set(refs)], captureId: null };
   if (failed) return { state: 'failed', reason: 'The capture was rejected. No completed capture is present in the available evidence.', evidenceIds: [...new Set(refs)], captureId: null };
@@ -82,7 +103,7 @@ export function investigationFacts(session) {
   const facts = [];
   for (const id of state.evidenceIds) {
     const e = session.events.find(e => e.id === id);
-    facts.push({ id, type: 'payment', state: state.state, response: e.response, operation: e.operation, httpStatus: e.httpStatus, provenance: e.provenance });
+    facts.push({ id, type: e.kind === 'response' ? 'payment' : e.kind === 'capture_requested' ? 'capture_attempt' : 'response_unavailable', state: state.state, response: e.response, operation: e.operation, httpStatus: e.httpStatus, provenance: e.provenance });
   }
   if (lost) facts.push({ id: lost.id, type: 'lost_response', state: state.state, provenance: 'injected_transport', response: { status: 'Response deliberately withheld from checkout' } });
   if (duplicate) facts.push({ id: duplicate.id, type: 'duplicate_webhook', state: state.state, provenance: duplicate.provenance, response: { id: duplicate.eventId, status: 'Duplicate delivery ignored' } });

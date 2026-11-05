@@ -1,0 +1,260 @@
+{
+  "format": "captureproof-evidence-v1",
+  "exportedAt": "2026-11-05T23:30:36.693Z",
+  "redaction": "Personal data and credentials omitted. Response hashes cover the retained fields only.",
+  "checkout": {
+    "id": "5ceb2cbc-8a45-41f8-86e9-1dd6bd707d46",
+    "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+    "createdAt": "2026-11-05T23:30:36.322Z",
+    "mode": "rehearsal",
+    "fixture": "failed-capture",
+    "amount": "12.00",
+    "events": [
+      {
+        "id": "0f34acd6-b609-4a89-bb9d-91d425fe8223",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.324Z",
+        "kind": "response",
+        "provenance": "synthetic_rehearsal",
+        "operation": "create",
+        "method": "POST",
+        "path": "/v2/checkout/orders",
+        "httpStatus": 201,
+        "response": {
+          "id": "REHEARSAL1E5B06A66DFA4F64AE",
+          "status": "CREATED",
+          "purchase_units": [
+            {
+              "reference_id": "5ceb2cbc-8a45-41f8-86e9-1dd6bd707d46",
+              "amount": {
+                "value": "12.00",
+                "currency_code": "USD"
+              }
+            }
+          ]
+        },
+        "debugId": null,
+        "responseHash": "36d8d1709ed590715f3a42534d0f2486d0f6eb644cc765c28d9ef450b66d1887",
+        "startedAt": "2026-11-05T23:30:36.323Z",
+        "durationMs": 1,
+        "requestId": "b369e3bd-0899-4e4b-ad4b-db2e9129838d"
+      },
+      {
+        "id": "563d002c-805a-4e4a-8d3b-81d6a708e041",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.414Z",
+        "kind": "response",
+        "provenance": "synthetic_rehearsal",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/REHEARSAL1E5B06A66DFA4F64AE",
+        "httpStatus": 200,
+        "response": {
+          "id": "REHEARSAL1E5B06A66DFA4F64AE",
+          "status": "CREATED",
+          "purchase_units": [
+            {
+              "reference_id": "5ceb2cbc-8a45-41f8-86e9-1dd6bd707d46",
+              "amount": {
+                "value": "12.00",
+                "currency_code": "USD"
+              }
+            }
+          ]
+        },
+        "debugId": null,
+        "responseHash": "36d8d1709ed590715f3a42534d0f2486d0f6eb644cc765c28d9ef450b66d1887",
+        "startedAt": "2026-11-05T23:30:36.413Z",
+        "durationMs": 1,
+        "requestId": null
+      },
+      {
+        "id": "343fca17-22ff-4b88-9868-b191f3912687",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.415Z",
+        "kind": "capture_requested",
+        "provenance": "synthetic_rehearsal",
+        "requestId": "e9c1c71d-487a-4844-977c-1cea43b569ba",
+        "explicitUserAction": true,
+        "recovery": false
+      },
+      {
+        "id": "489590e7-5bc4-492e-b389-cd5a2652f140",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.416Z",
+        "kind": "response",
+        "provenance": "synthetic_rehearsal",
+        "operation": "capture",
+        "method": "POST",
+        "path": "/v2/checkout/orders/REHEARSAL1E5B06A66DFA4F64AE/capture",
+        "httpStatus": 422,
+        "response": {
+          "name": "UNPROCESSABLE_ENTITY",
+          "details": [
+            {
+              "issue": "ORDER_NOT_APPROVED"
+            }
+          ]
+        },
+        "debugId": null,
+        "responseHash": "dbcd9ae5c19c2457d221c6bb7dbdb50f28e02e2d1d60c50c1e30e66ca38ddc50",
+        "startedAt": "2026-11-05T23:30:36.416Z",
+        "durationMs": 0,
+        "requestId": "e9c1c71d-487a-4844-977c-1cea43b569ba",
+        "deliveredToCheckout": true
+      },
+      {
+        "id": "0947f0ee-111b-4a6d-8005-09f164fd71c7",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.478Z",
+        "kind": "approval_rehearsal",
+        "provenance": "synthetic_rehearsal",
+        "message": "Buyer approval simulated locally. No sandbox request."
+      },
+      {
+        "id": "82adabac-01ea-4aa8-a738-120a9ca56910",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.478Z",
+        "kind": "response",
+        "provenance": "synthetic_rehearsal",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/REHEARSAL1E5B06A66DFA4F64AE",
+        "httpStatus": 200,
+        "response": {
+          "id": "REHEARSAL1E5B06A66DFA4F64AE",
+          "status": "APPROVED",
+          "purchase_units": [
+            {
+              "reference_id": "5ceb2cbc-8a45-41f8-86e9-1dd6bd707d46",
+              "amount": {
+                "value": "12.00",
+                "currency_code": "USD"
+              }
+            }
+          ]
+        },
+        "debugId": null,
+        "responseHash": "480dc1a1785261dcaf1aebb30b650957a8fb8d8a59ba4e4c4052213929c1bd3a",
+        "startedAt": "2026-11-05T23:30:36.478Z",
+        "durationMs": 0,
+        "requestId": null
+      },
+      {
+        "id": "41f5f0f6-4ba4-439e-8087-699f3e8aa352",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.578Z",
+        "kind": "response",
+        "provenance": "synthetic_rehearsal",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/REHEARSAL1E5B06A66DFA4F64AE",
+        "httpStatus": 200,
+        "response": {
+          "id": "REHEARSAL1E5B06A66DFA4F64AE",
+          "status": "APPROVED",
+          "purchase_units": [
+            {
+              "reference_id": "5ceb2cbc-8a45-41f8-86e9-1dd6bd707d46",
+              "amount": {
+                "value": "12.00",
+                "currency_code": "USD"
+              }
+            }
+          ]
+        },
+        "debugId": null,
+        "responseHash": "480dc1a1785261dcaf1aebb30b650957a8fb8d8a59ba4e4c4052213929c1bd3a",
+        "startedAt": "2026-11-05T23:30:36.578Z",
+        "durationMs": 0,
+        "requestId": null
+      },
+      {
+        "id": "7d1e94ff-8b47-417d-9cc6-4427d45ecff6",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.579Z",
+        "kind": "capture_requested",
+        "provenance": "synthetic_rehearsal",
+        "requestId": "72857d26-665d-45ec-8e3c-61ff0a86d689",
+        "explicitUserAction": true,
+        "recovery": true
+      },
+      {
+        "id": "f59de847-4f00-4e89-a556-e898445d85d0",
+        "traceId": "8f61d3a920674af9a58fb6a751ce0ec7",
+        "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+        "at": "2026-11-05T23:30:36.580Z",
+        "kind": "transport_error",
+        "provenance": "synthetic_rehearsal",
+        "operation": "capture",
+        "requestId": "72857d26-665d-45ec-8e3c-61ff0a86d689",
+        "message": "Capture response unavailable. Do not repeat the payment. Reconcile first."
+      }
+    ],
+    "orderId": "REHEARSAL1E5B06A66DFA4F64AE",
+    "approvalUrl": null,
+    "attempt": {
+      "requestId": "72857d26-665d-45ec-8e3c-61ff0a86d689",
+      "state": "sent",
+      "recovery": true
+    },
+    "recoveryUsed": true,
+    "initialUsed": true,
+    "investigation": {
+      "source": "deterministic",
+      "state": "unresolved",
+      "reason": "The latest capture attempt has no definitive outcome. Reconcile the order before deciding what to do.",
+      "captureId": null,
+      "evidenceIds": [
+        "7d1e94ff-8b47-417d-9cc6-4427d45ecff6",
+        "f59de847-4f00-4e89-a556-e898445d85d0"
+      ],
+      "duplicate": false,
+      "facts": [
+        {
+          "id": "7d1e94ff-8b47-417d-9cc6-4427d45ecff6",
+          "type": "capture_attempt",
+          "state": "unresolved",
+          "provenance": "synthetic_rehearsal"
+        },
+        {
+          "id": "f59de847-4f00-4e89-a556-e898445d85d0",
+          "type": "response_unavailable",
+          "state": "unresolved",
+          "operation": "capture",
+          "provenance": "synthetic_rehearsal"
+        }
+      ],
+      "findings": [
+        {
+          "explanation": "The latest capture attempt has no definitive outcome. Reconcile the order before deciding what to do.",
+          "evidenceIds": [
+            "7d1e94ff-8b47-417d-9cc6-4427d45ecff6",
+            "f59de847-4f00-4e89-a556-e898445d85d0"
+          ]
+        }
+      ],
+      "nextStep": "reconcile",
+      "notice": "Model unavailable. Showing the transaction checks only.",
+      "evidenceVersion": 9
+    },
+    "state": {
+      "state": "unresolved",
+      "reason": "The latest capture attempt has no definitive outcome. Reconcile the order before deciding what to do.",
+      "captureId": null,
+      "evidenceIds": [
+        "7d1e94ff-8b47-417d-9cc6-4427d45ecff6",
+        "f59de847-4f00-4e89-a556-e898445d85d0"
+      ]
+    },
+    "effects": []
+  }
+}

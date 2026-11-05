@@ -1,0 +1,26 @@
+
+> captureproof@0.1.0 test
+> node --test test/*.test.mjs
+
+✔ lost response preserves gateway evidence and reconciles one merchant receipt (7.068656ms)
+✔ duplicate deliveries never repeat capture or fulfillment (2.51598ms)
+✔ failed capture requires explicit recovery and fresh buyer approval (3.258962ms)
+✔ concurrent capture clicks result in one request (2.016398ms)
+✔ ambiguous network failure stays blocked after process restart (17.800727ms)
+✔ missing, pending, wrong-order, wrong-amount and conflicting evidence remain unresolved (2.296168ms)
+✔ state mismatch, unknown citations and unsupported duplicate findings are rejected (3.792523ms)
+✔ model failures and malicious output fall back without any payment action (1.658076ms)
+✔ saved evidence excludes credentials and customer fields (0.332152ms)
+✔ PayPal uses sandbox only, stable request ID, no negative-test header (19.047462ms)
+✔ unverified webhook cannot create a merchant receipt (1.147705ms)
+✔ HTTP core path, evidence export and local request protections (53.813093ms)
+✔ recovery response loss supersedes rejection across restart until reconciliation (35.096403ms)
+✔ contradictory free answers are omitted and findings need matching evidence (5.065998ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 185.662892

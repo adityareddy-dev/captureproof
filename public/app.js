@@ -39,9 +39,8 @@ function renderAnalysis() {
   if (result.state !== active.state.state || result.evidenceVersion !== active.events.length || (result.evidenceIds || []).some(id => !currentIds.has(id))) { div.append(node('p', 'Evidence changed. Investigate again for a current explanation.')); return; }
   div.append(node('div', result.source === 'model' ? `${result.model} · ${result.provenance}` : 'TRANSACTION CHECKS · Model explanation unavailable', 'source'));
   for (const finding of result.findings) { const item = node('div', undefined, 'finding'); item.append(node('p', finding.explanation), citations(finding.evidenceIds)); div.append(item); }
-  if (result.questionAnswer) { const answer = node('div', undefined, 'finding'); answer.append(node('p', result.questionAnswer), citations(result.findings.flatMap(f => f.evidenceIds))); div.append(answer); }
   const next = { do_not_capture: 'Do not repeat the payment. The matching capture is complete.', approve_then_recover: 'Buyer approval is needed. Then explicitly request recovery.', reconcile: 'Reconcile the order. There is not enough evidence for another capture.' };
-  div.append(node('div', next[result.nextStep], 'decision'));
+  div.append(node('div', next[active.state.state === 'captured' ? 'do_not_capture' : active.state.state === 'failed' ? 'approve_then_recover' : 'reconcile'], 'decision'));
   if (result.notice) div.append(node('p', result.notice, 'fine'));
 }
 function renderTimeline() {
@@ -61,7 +60,7 @@ function button(text, action, data = {}) { const b = node('button', text); b.onc
 function renderActions() {
   const div = $('buttons'); div.replaceChildren();
   const state = active.state.state;
-  const delivered = active.events.some(e => e.kind === 'transport_injected');
+  const delivered = active.events.some(e => e.kind === 'transport_injected' || e.kind === 'transport_error' && e.operation === 'capture');
   const needsApproval = !active.events.some(e => e.kind === 'response' && e.response?.status === 'APPROVED');
   $('action-help').textContent = state === 'captured' ? 'A matching completed capture exists. Another capture is blocked.' : state === 'failed' ? 'The request failed before approval. Approve the same sandbox order, then recover explicitly.' : delivered ? 'The checkout timed out. Reconcile the order before deciding what to do.' : 'Use buyer approval for a successful capture. The rejection fixture deliberately tries capture before approval.';
   if (state !== 'captured') {

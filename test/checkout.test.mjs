@@ -105,13 +105,13 @@ test('state mismatch, unknown citations and unsupported duplicate findings are r
   const { checkout } = setup(t); const s = await checkout.create('rehearsal', 'failed-capture');
   const failed = await checkout.capture(s.id, confirm); const packet = investigationFacts(failed);
   const good = { state: 'failed', findings: [{ evidenceIds: packet.evidenceIds, explanation: 'The capture request was rejected before approval.' }], nextStep: 'approve_then_recover', questionAnswer: 'Approve the same order before recovery.' };
-  assert.deepEqual(validateInvestigation(good, packet), good);
+  assert.deepEqual(validateInvestigation(good, packet), { state: good.state, findings: good.findings, nextStep: good.nextStep });
   assert.throws(() => validateInvestigation({ ...good, state: 'captured' }, packet));
   assert.throws(() => validateInvestigation({ ...good, nextStep: 'do_not_capture' }, packet));
   assert.throws(() => validateInvestigation({ ...good, findings: [{ explanation: 'Payment completed', evidenceIds: ['invented'] }] }, packet));
   assert.throws(() => validateInvestigation({ ...good, findings: [{ explanation: 'Duplicate webhook', evidenceIds: packet.evidenceIds }] }, packet));
   assert.throws(() => validateInvestigation({ ...good, findings: [{ explanation: 'A lost response caused the failure', evidenceIds: packet.evidenceIds }] }, packet));
-  assert.throws(() => validateInvestigation({ ...good, questionAnswer: 'A duplicate delivery occurred.' }, packet));
+  assert.equal(validateInvestigation({ ...good, questionAnswer: 'A duplicate delivery occurred.' }, packet).questionAnswer, undefined);
 });
 
 test('model failures and malicious output fall back without any payment action', async t => {

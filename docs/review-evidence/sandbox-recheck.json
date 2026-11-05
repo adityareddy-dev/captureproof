@@ -1,0 +1,232 @@
+{
+  "checkedAt": "2026-11-05T23:31:39.269Z",
+  "note": "Reused the three recorded sandbox checkouts. Fresh PayPal GET responses only. Repeat capture and recovery were blocked before the sandbox adapter was called.",
+  "captureCalls": 0,
+  "cases": [
+    {
+      "fixture": "lost-response",
+      "state": {
+        "state": "captured",
+        "reason": "A completed capture matches this order, amount and checkout.",
+        "captureId": "4FX9198454642903W",
+        "evidenceIds": [
+          "42c70892-96bf-4649-9394-936282eaf236",
+          "bc22c6a0-3741-4241-9d47-502a5cbc8976",
+          "f9e6abd9-4e5a-4d40-9034-9af91b56f868"
+        ]
+      },
+      "receipts": 1,
+      "latestResponse": {
+        "id": "f9e6abd9-4e5a-4d40-9034-9af91b56f868",
+        "traceId": "6171294c238a4465998c55f3c2746c9d",
+        "orderId": "99734492139447447",
+        "at": "2026-11-05T23:31:37.058Z",
+        "kind": "response",
+        "provenance": "sandbox",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/99734492139447447",
+        "httpStatus": 200,
+        "response": {
+          "id": "99734492139447447",
+          "intent": "CAPTURE",
+          "status": "COMPLETED",
+          "purchase_units": [
+            {
+              "reference_id": "e8ba11f9-ebb8-4c7e-8923-bfe2c7ca2417",
+              "amount": {
+                "currency_code": "USD",
+                "value": "12.00"
+              },
+              "payments": {
+                "captures": [
+                  {
+                    "id": "4FX9198454642903W",
+                    "status": "COMPLETED",
+                    "amount": {
+                      "currency_code": "USD",
+                      "value": "12.00"
+                    },
+                    "final_capture": true,
+                    "create_time": "2026-11-05T21:17:43Z",
+                    "update_time": "2026-11-05T21:17:43Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "create_time": "2026-11-05T21:17:43Z",
+          "update_time": "2026-11-05T21:17:43Z"
+        },
+        "debugId": "f65029570dc95",
+        "responseHash": "ae12dd560876628c539e0ca801efce9ef52415ccd256c596e9bbdd95a709e0e8",
+        "startedAt": "2026-11-05T23:31:36.178Z",
+        "durationMs": 880,
+        "requestId": null
+      },
+      "captureRequests": 1,
+      "investigation": {
+        "state": "captured",
+        "nextStep": "do_not_capture",
+        "findings": [
+          {
+            "explanation": "The completed capture response shows that capture ID 4FX9198454642903W successfully finished with status COMPLETED, while the injected trace shows a simulated lost response.",
+            "evidenceIds": [
+              "42c70892-96bf-4649-9394-936282eaf236",
+              "bc22c6a0-3741-4241-9d47-502a5cbc8976",
+              "f9e6abd9-4e5a-4d40-9034-9af91b56f868",
+              "9c02e9a5-c7ef-4a43-b2e0-7f3640673825"
+            ]
+          }
+        ],
+        "source": "model",
+        "model": "gemini-3.5-flash-lite",
+        "evidenceIds": [
+          "42c70892-96bf-4649-9394-936282eaf236",
+          "bc22c6a0-3741-4241-9d47-502a5cbc8976",
+          "f9e6abd9-4e5a-4d40-9034-9af91b56f868"
+        ],
+        "duplicate": false,
+        "provenance": "Model analysis of PayPal sandbox evidence",
+        "usage": {
+          "promptTokenCount": 1477,
+          "candidatesTokenCount": 205,
+          "totalTokenCount": 1682,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1477
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "at": "2026-11-05T23:32:48.149Z"
+      }
+    },
+    {
+      "fixture": "duplicate-webhook",
+      "state": {
+        "state": "captured",
+        "reason": "A completed capture matches this order, amount and checkout.",
+        "captureId": "19J28426P63189117",
+        "evidenceIds": [
+          "78f7c63c-f995-425c-a166-449a00193ada",
+          "cec7148e-2c0d-4058-b59c-10cbd6f8ecd2"
+        ]
+      },
+      "receipts": 1,
+      "latestResponse": {
+        "id": "cec7148e-2c0d-4058-b59c-10cbd6f8ecd2",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T23:31:38.778Z",
+        "kind": "response",
+        "provenance": "sandbox",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/3BJ25238B3250332R",
+        "httpStatus": 200,
+        "response": {
+          "id": "3BJ25238B3250332R",
+          "intent": "CAPTURE",
+          "status": "COMPLETED",
+          "purchase_units": [
+            {
+              "reference_id": "be3dc1c4-381a-468b-98a9-cc27ffcadcca",
+              "amount": {
+                "currency_code": "USD",
+                "value": "12.00"
+              },
+              "payments": {
+                "captures": [
+                  {
+                    "id": "19J28426P63189117",
+                    "status": "COMPLETED",
+                    "amount": {
+                      "currency_code": "USD",
+                      "value": "12.00"
+                    },
+                    "final_capture": true,
+                    "create_time": "2026-11-05T21:18:59Z",
+                    "update_time": "2026-11-05T21:18:59Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "create_time": "2026-11-05T21:18:59Z",
+          "update_time": "2026-11-05T21:18:59Z"
+        },
+        "debugId": "f12135169f69b",
+        "responseHash": "41608fe70682a747a45431ed23985f8d67356a65cead769d24fd542ce45cc0c8",
+        "startedAt": "2026-11-05T23:31:38.166Z",
+        "durationMs": 612,
+        "requestId": null
+      },
+      "captureRequests": 1
+    },
+    {
+      "fixture": "failed-capture",
+      "state": {
+        "state": "captured",
+        "reason": "A completed capture matches this order, amount and checkout.",
+        "captureId": "14D47111BA3801508",
+        "evidenceIds": [
+          "d45b8da9-65eb-42f8-98ef-2a5345b6b513",
+          "1fcc9ce9-4f35-4725-8c61-e3389d9b5fae",
+          "bd084d2c-00f5-4156-887e-d96368066b5c"
+        ]
+      },
+      "receipts": 1,
+      "latestResponse": {
+        "id": "bd084d2c-00f5-4156-887e-d96368066b5c",
+        "traceId": "a023d2cb5789459abfec27b22b19701e",
+        "orderId": "9P049443N6787501B",
+        "at": "2026-11-05T23:31:39.268Z",
+        "kind": "response",
+        "provenance": "sandbox",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/9P049443N6787501B",
+        "httpStatus": 200,
+        "response": {
+          "id": "9P049443N6787501B",
+          "intent": "CAPTURE",
+          "status": "COMPLETED",
+          "purchase_units": [
+            {
+              "reference_id": "44c3e320-6ef6-4716-b093-3c15b9a93283",
+              "amount": {
+                "currency_code": "USD",
+                "value": "12.00"
+              },
+              "payments": {
+                "captures": [
+                  {
+                    "id": "14D47111BA3801508",
+                    "status": "COMPLETED",
+                    "amount": {
+                      "currency_code": "USD",
+                      "value": "12.00"
+                    },
+                    "final_capture": true,
+                    "create_time": "2026-11-05T21:18:37Z",
+                    "update_time": "2026-11-05T21:18:37Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "create_time": "2026-11-05T21:18:37Z",
+          "update_time": "2026-11-05T21:18:37Z"
+        },
+        "debugId": "f573405ceae84",
+        "responseHash": "aeb25245b564076e1c93f3340580a64b1c07a96c40edfe342233281db7ca5c05",
+        "startedAt": "2026-11-05T23:31:38.780Z",
+        "durationMs": 488,
+        "requestId": null
+      },
+      "captureRequests": 2
+    }
+  ]
+}

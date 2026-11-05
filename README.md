@@ -22,7 +22,7 @@ Open **http://localhost:4317**. Leave the environment on **Synthetic rehearsal**
 npm test
 ```
 
-Tests cover the three cases, conflicting and missing evidence, restart protection, simultaneous capture clicks, redaction, rejected model output, webhook verification and the local HTTP boundary.
+Tests cover the three cases, recovery response loss across restart, conflicting and missing evidence, simultaneous capture clicks, redaction, rejected model output, webhook verification and the local HTTP boundary.
 
 ## The three fixtures
 
@@ -67,7 +67,7 @@ Optional real webhook verification uses `PAYPAL_WEBHOOK_ID` and `POST /api/webho
 
 The default model is `gemini-3.5-flash-lite`, used through the Gemini REST API on an observed free-tier project. `GEMINI_MODEL` can select another compatible Gemini model. Set `GEMINI_FREE_TIER_CONFIRMED=yes` only after checking the project's billing tier. No paid fallback is configured. Rehearsal payment evidence can be sent to the model, but that analysis remains labelled as rehearsal.
 
-The model receives redacted evidence facts and the merchant's question. It explains the relationship between a capture, the request failure and repeated delivery, and cites evidence IDs. Fixture names are excluded from its input so the model cannot use a scenario title as evidence that a failure occurred. It has no payment tools. The server validates its state, citations and proposed next step. A rejected or unavailable answer falls back to the transaction checks with a visible notice. These checks constrain the response but do not prove every sentence of free text, so the linked evidence remains available for inspection.
+The model receives redacted evidence facts and the merchant's question. It explains the relationship between a capture, the request failure and repeated delivery, and cites evidence IDs. Fixture names are excluded from its input so the model cannot use a scenario title as evidence that a failure occurred. It has no payment tools. The server validates its state, citations and proposed next step. Findings that claim a completed payment need a matching completed-capture response among their own citations. Model prose cannot supply capture instructions. The console displays the payment state and next action from the transaction checks, and omits the separate free-text answer. A rejected or unavailable explanation falls back to the transaction checks with a visible notice. These checks constrain the response but do not prove every sentence of free text, so the linked evidence remains available for inspection.
 
 Run the known-case model evaluation with free access configured:
 
@@ -81,11 +81,13 @@ node scripts/evaluate-model.mjs
 
 Before a capture, the server checks the order ID, checkout reference, amount, currency, approval state and absence of captures. It writes the capture request ID and a sent marker to SQLite before making the network request. Repeated clicks are locked while an action runs. A crash or uncertain response leaves the marker set and blocks another capture after restart. Reconciliation is read-only at PayPal.
 
-An explicit recovery is allowed only after the known ORDER_NOT_APPROVED rejection, a fresh APPROVED order with no captures, and a separate merchant click. It receives a new request ID because it follows a definitive rejection. Unknown failures are not automatically retried. Receipts have a database uniqueness constraint per checkout. Run one application process per database. This is a local demonstration, with a simulated merchant receipt rather than external fulfilment.
+An explicit recovery is allowed only after the known ORDER_NOT_APPROVED rejection, a fresh APPROVED order with no captures, and a separate merchant click. It receives a new request ID because it follows a definitive rejection. If recovery loses its response, its unanswered attempt takes precedence over the earlier rejection. The displayed outcome stays unresolved after restart, and another capture stays blocked. A matching completed capture from reconciliation resolves the outcome and records one receipt. Unknown failures are not automatically retried. Receipts have a database uniqueness constraint per checkout. Run one application process per database. This is a local demonstration, with a simulated merchant receipt rather than external fulfilment.
 
 State is stored in `data/captureproof.sqlite`, which is excluded from Git. Stop the app and remove `data/` to start clean, or select another path with `CAPTUREPROOF_DB`. Do not remove state while investigating an uncertain sandbox capture. The app binds to loopback. Capture routes require same-origin JSON requests and a local request header. Keep the console local.
 
 ## Evidence and demonstration
+
+[Recovery and investigation regressions](docs/review-fixes.md) include restart screenshots, browser results, and fresh read-only sandbox checks.
 
 Each investigation finding links to its matching response or trace event. Use **Download evidence** to save a redacted checkout bundle. A gateway response withheld by the transport fixture is explicitly marked as not delivered to the checkout. The injected fault has its own provenance label. Local webhook replay has a different label from verified PayPal delivery.
 

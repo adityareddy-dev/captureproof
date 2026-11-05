@@ -18,7 +18,7 @@ A checkout timeout leaves a merchant with a difficult question: did the buyer pa
 
 CaptureProof is a local merchant console for investigating one PayPal checkout. It joins order and capture responses to a request timeline. The investigation explains what the evidence supports and links each finding to the matching response or trace. Capture and recovery require an explicit merchant action and fresh transaction-state checks.
 
-The sandbox demonstration covers a completed capture followed by an injected lost response, a duplicate webhook delivery replay, and a capture request rejected before buyer approval. Replayed and injected events are labelled separately. Missing or conflicting evidence stays unresolved.
+The sandbox demonstration covers a completed capture followed by an injected lost response, a duplicate webhook delivery replay, and a capture request rejected before buyer approval. Replayed and injected events are labelled separately. Missing or conflicting evidence stays unresolved. If recovery loses its response, the earlier rejection does not turn the unknown recovery outcome into a failed payment.
 
 ## How it is built
 

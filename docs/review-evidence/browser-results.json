@@ -1,0 +1,37 @@
+{
+  "label": "Synthetic regression only. No PayPal request or sandbox result is created by this check.",
+  "snapshots": [
+    {
+      "name": "recovery-response-lost",
+      "displayedState": "Unresolved",
+      "help": "The checkout timed out. Reconcile the order before deciding what to do.",
+      "decision": "Reconcile the order. There is not enough evidence for another capture.",
+      "receipts": 0,
+      "captureRequests": 2,
+      "state": "unresolved"
+    },
+    {
+      "name": "recovery-after-restart",
+      "displayedState": "Unresolved",
+      "help": "The checkout timed out. Reconcile the order before deciding what to do.",
+      "decision": "Reconcile the order. There is not enough evidence for another capture.",
+      "receipts": 0,
+      "captureRequests": 2,
+      "state": "unresolved"
+    },
+    {
+      "name": "recovery-after-reconcile",
+      "displayedState": "Captured",
+      "help": "A matching completed capture exists. Another capture is blocked.",
+      "decision": "Do not repeat the payment. The matching capture is complete.",
+      "receipts": 1,
+      "captureRequests": 2,
+      "state": "captured"
+    }
+  ],
+  "repeatCaptureHTTPStatus": 409,
+  "omittedSavedAnswer": true,
+  "citationTargetsOpen": true,
+  "mobileOverflow": false,
+  "errors": []
+}
