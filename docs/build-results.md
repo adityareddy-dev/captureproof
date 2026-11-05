@@ -1,17 +1,11 @@
-# Build results
+# Sandbox build results
 
-Recorded November 5, 2026, America/Chicago. This is a local build record. It does not establish that the PayPal sandbox integration has run.
+Verified on 2026-11-05T21:19:32.066Z. The evidence checker accepted all three sandbox cases. Each has one completed capture and one merchant receipt. The failure case includes the real HTTP 422 ORDER_NOT_APPROVED response, a fresh APPROVED order lookup with no captures, and a separate recovery request with its own request ID.
 
-| Check | Observed result | Record |
-| --- | --- | --- |
-| Core-path suite | Total 12, failed 0 | [Command output](test-results.txt) |
-| Free model access | Gemini 3.5 Flash-Lite returned a successful generation using a free-tier project | Model evaluation and browser investigation |
-| Known-case model evaluation | Captured, duplicate delivery, failed request, missing evidence and conflicting evidence each produced the expected state with accepted citations | [Responses and synthetic evidence](model-evaluation.json) |
-| Browser path | Lost-response rehearsal, reconciliation, one receipt and a model investigation completed | [Desktop screenshot](rehearsal-desktop.png) |
-| Mobile layout | Checked at 390 × 844 with no horizontal overflow | [Mobile screenshot](rehearsal-mobile.png) |
-| Source privacy | Credential values absent from tracked source and evidence | Private environment file excluded from the checkout |
-| PayPal access | Missing sandbox app credentials, developer login needs a password not saved in Chrome | No live response or successful sandbox recovery claimed |
+The lost-response case has one capture request, an injected fault labelled separately, a successful reconciliation lookup and a current Gemini investigation with accepted evidence citations. The repeated-delivery case has one capture request and both local replay and ignored duplicate events.
 
-The model evaluation exposed an early error: a fixture name led the model to infer a lost response even when the trace contained no such event. Fixture names were removed from the prompt, and fault claims now require matching cited events. The saved evaluation uses the corrected evidence input. Rejected or unavailable model answers remain subject to deterministic fallback.
+The recording lasts 104.4 seconds. Buyer approvals preceded the recording. It shows live capture, reconciliation and recovery actions, and inspects the previously recorded rejection. The source includes the redacted evidence and exact captions.
 
-The sandbox runs, genuine rejected-capture recovery, real response exports and final public video remain to complete. The intended demo script and submission draft are included for that work. The current build is not ready for entry submission.
+Core-path suite: total 12, failed 0. A browser check confirmed the sandbox dropdown option and selected mode after opening an existing checkout. The missing option tag was corrected. Tests cover the capture safeguards, receipt deduplication, restart protection, model validation, redaction and HTTP boundary.
+
+No production endpoint or paid service was used. The repository is MIT licensed and remains private until the reviewed submission handoff.

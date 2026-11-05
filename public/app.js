@@ -75,6 +75,7 @@ function renderActions() {
 }
 async function show(session) {
   active = session; history.replaceState(null, '', `/?checkout=${session.id}`);
+  $('mode').value = session.mode; $('fixture').value = session.fixture;
   $('empty').hidden = true; $('checkout').hidden = false;
   $('title').textContent = labels[session.fixture]; $('order').textContent = session.orderId || 'Order unavailable';
   $('payment').textContent = session.state.state === 'captured' ? 'Captured' : session.state.state === 'failed' ? 'Request failed' : 'Unresolved';

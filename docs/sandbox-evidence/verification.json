@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-11-05T21:19:32.066Z",
+  "note": "Sandbox payment responses with an injected transport fault and local delivery replay labelled separately. This check reads evidence and sends no payment requests.",
+  "fixtures": [
+    {
+      "fixture": "lost-response",
+      "checkoutId": "e8ba11f9-ebb8-4c7e-8923-bfe2c7ca2417",
+      "orderId": "99734492139447447",
+      "captureId": "4FX9198454642903W",
+      "receipts": 1,
+      "evidenceFile": "lost-response.json"
+    },
+    {
+      "fixture": "duplicate-webhook",
+      "checkoutId": "be3dc1c4-381a-468b-98a9-cc27ffcadcca",
+      "orderId": "3BJ25238B3250332R",
+      "captureId": "19J28426P63189117",
+      "receipts": 1,
+      "evidenceFile": "duplicate-webhook.json"
+    },
+    {
+      "fixture": "failed-capture",
+      "checkoutId": "44c3e320-6ef6-4716-b093-3c15b9a93283",
+      "orderId": "9P049443N6787501B",
+      "captureId": "14D47111BA3801508",
+      "receipts": 1,
+      "evidenceFile": "failed-capture.json"
+    }
+  ]
+}

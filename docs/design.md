@@ -2,13 +2,13 @@
 
 The audience is a small merchant who sees a failed checkout request and needs to decide whether the buyer has already paid. The demonstrated benefit is a payment decision tied to its evidence. No sales, latency improvement or superiority measurement is claimed.
 
-| Criterion | What the build demonstrates | Evidence still needed |
+| Criterion | What the build demonstrates | Validation and limits |
 | --- | --- | --- |
-| Technological implementation | Orders and capture API adapter, correlated traces, persistent capture guards, receipt deduplication, model explanations with evidence citations | Three real sandbox runs and their exported responses |
-| Design | Checkout, trace timeline, investigation, evidence inspection and explicit actions in one local console | Cold review with sandbox access |
+| Technological implementation | Orders and capture API adapter, correlated traces, persistent capture guards, receipt deduplication, model explanations with evidence citations | [Three verified sandbox runs](sandbox-evidence/verification.json), including explicit recovery on the rejected order |
+| Design | Checkout, trace timeline, investigation, evidence inspection and explicit actions in one local console | Desktop and mobile browser checks completed. Independent cold review follows. |
 | Potential impact | A specific merchant decision: whether another capture could repeat a completed payment | User impact beyond the demonstration has not been measured |
 | Innovation | Payment-state evidence and read-only investigation alongside a constrained recovery path | No claim of novelty over all other tools |
-| Presentation | Lost response, evidence inspection, failed request and recovery, with duplicate delivery shown briefly | Final sandbox recording under three minutes |
+| Presentation | Lost response, evidence inspection, failed request and recovery, with duplicate delivery shown briefly | Recorded sandbox demonstration under three minutes, with [exact captions](demo-captions.vtt) |
 
 The [published rubric](https://paypalaihackathon.devpost.com/rules) gives these five criteria equal weight. The PayPal integration is central: order and capture state determines the merchant decision. The model's contribution is an explanation of several records together, tailored to a merchant question. Payment state and actions stay in ordinary server code.
 
@@ -35,7 +35,7 @@ The console records its own traces, not a fleet-wide OpenTelemetry collector. Ev
 
 The lost response is injected after the gateway receives a successful capture response. The gateway preserves that response as evidence, marks it as withheld from the checkout, and leaves the merchant receipt unrecorded until reconciliation. The application does not claim an actual PayPal outage.
 
-The failed request makes an ordinary capture call on an unapproved order, without a mock header. That sandbox path remains unverified until credentials are available. If PayPal returns a different error, the app does not relabel it as ORDER_NOT_APPROVED. It keeps the uncertain capture marker and blocks recovery.
+The failed request makes an ordinary capture call on an unapproved order, without a mock header. The saved sandbox response confirms HTTP 422 and ORDER_NOT_APPROVED, followed by approval and recovery on the same order. If PayPal returns a different error, the app does not relabel it as ORDER_NOT_APPROVED. It keeps the uncertain capture marker and blocks recovery.
 
 One receipt row per checkout provides local deduplication. It is not a guarantee for an external shipping provider. A real merchant would use an outbox and the fulfilment provider's idempotency mechanism. Multi-process operation is outside this local build.
 

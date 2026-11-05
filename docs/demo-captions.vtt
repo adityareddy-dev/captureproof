@@ -1,0 +1,45 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:07.000
+I built CaptureProof for merchants who need to know whether a failed checkout request left a successful payment behind.
+
+2
+00:00:07.000 --> 00:00:12.000
+Real PayPal sandbox requests, test funds only. Buyer approval was completed before recording.
+
+3
+00:00:12.000 --> 00:00:21.000
+The capture succeeds. Its response is deliberately withheld from checkout. This injected transport fault is labelled.
+
+4
+00:00:21.000 --> 00:00:29.000
+Reconciliation reads the order again. Gemini explains the records and links its findings to the evidence.
+
+5
+00:00:29.000 --> 00:00:39.000
+A matching completed capture means the payment must not be repeated. Inspect the linked response and request trace.
+
+6
+00:00:39.000 --> 00:00:44.000
+One capture and one merchant receipt. Another capture is blocked by transaction-state checks.
+
+7
+00:00:44.000 --> 00:00:56.000
+Replay of a recorded sandbox rejection: ORDER_NOT_APPROVED. A rejected request before approval, not a declined card.
+
+8
+00:00:56.000 --> 00:01:02.000
+The same order has since been approved in sandbox. Approval alone has not captured it. Recovery needs a separate merchant action.
+
+9
+00:01:02.000 --> 00:01:16.080
+Explicit recovery checks current approval, amount and absence of captures, then makes one capture request. One receipt is recorded.
+
+10
+00:01:16.080 --> 00:01:27.080
+This captured transaction was delivered twice in a local replay. It is not a webhook received from PayPal. The duplicate was ignored.
+
+11
+00:01:27.080 --> 00:01:44.440
+One capture and one receipt per checkout. The console runs locally with Node and SQLite, and exports redacted evidence.

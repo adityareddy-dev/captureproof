@@ -1,0 +1,224 @@
+{
+  "format": "captureproof-evidence-v1",
+  "exportedAt": "2026-11-05T21:19:32.058Z",
+  "redaction": "Personal data and credentials omitted. Response hashes cover the retained fields only.",
+  "checkout": {
+    "id": "be3dc1c4-381a-468b-98a9-cc27ffcadcca",
+    "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+    "createdAt": "2026-11-05T21:13:07.325Z",
+    "mode": "sandbox",
+    "fixture": "duplicate-webhook",
+    "amount": "12.00",
+    "events": [
+      {
+        "id": "2de5d0e2-4583-486f-9ac6-162737fbdc30",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:13:08.325Z",
+        "kind": "response",
+        "provenance": "sandbox",
+        "operation": "create",
+        "method": "POST",
+        "path": "/v2/checkout/orders",
+        "httpStatus": 200,
+        "response": {
+          "id": "3BJ25238B3250332R",
+          "intent": "CAPTURE",
+          "status": "PAYER_ACTION_REQUIRED",
+          "purchase_units": [
+            {
+              "reference_id": "be3dc1c4-381a-468b-98a9-cc27ffcadcca",
+              "amount": {
+                "currency_code": "USD",
+                "value": "12.00"
+              }
+            }
+          ]
+        },
+        "debugId": "f818979793406",
+        "responseHash": "00b5d18ef4f74a03c9a61e4457fc6b8ebacea2b8ae619e429a03a5c7b0b8f661",
+        "startedAt": "2026-11-05T21:13:07.332Z",
+        "durationMs": 993,
+        "requestId": "6b845b5c-8743-4ea8-b658-5a8ee5954cda"
+      },
+      {
+        "id": "15863a70-f60b-45cf-a2be-11cbc7f26d6e",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:17:17.057Z",
+        "kind": "response",
+        "provenance": "sandbox",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/3BJ25238B3250332R",
+        "httpStatus": 200,
+        "response": {
+          "id": "3BJ25238B3250332R",
+          "intent": "CAPTURE",
+          "status": "APPROVED",
+          "purchase_units": [
+            {
+              "reference_id": "be3dc1c4-381a-468b-98a9-cc27ffcadcca",
+              "amount": {
+                "currency_code": "USD",
+                "value": "12.00"
+              }
+            }
+          ],
+          "create_time": "2026-11-05T21:13:07Z"
+        },
+        "debugId": "f9594784b7f96",
+        "responseHash": "f51f9b454073339506553e3df2caae7b66a30f2dd88e9a5df463308a81f9d235",
+        "startedAt": "2026-11-05T21:17:16.748Z",
+        "durationMs": 309,
+        "requestId": null
+      },
+      {
+        "id": "4d6b8db9-f2a8-4af1-b30a-a174ebb3e998",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:18:58.932Z",
+        "kind": "response",
+        "provenance": "sandbox",
+        "operation": "get",
+        "method": "GET",
+        "path": "/v2/checkout/orders/3BJ25238B3250332R",
+        "httpStatus": 200,
+        "response": {
+          "id": "3BJ25238B3250332R",
+          "intent": "CAPTURE",
+          "status": "APPROVED",
+          "purchase_units": [
+            {
+              "reference_id": "be3dc1c4-381a-468b-98a9-cc27ffcadcca",
+              "amount": {
+                "currency_code": "USD",
+                "value": "12.00"
+              }
+            }
+          ],
+          "create_time": "2026-11-05T21:13:07Z"
+        },
+        "debugId": "f6726413eccea",
+        "responseHash": "f51f9b454073339506553e3df2caae7b66a30f2dd88e9a5df463308a81f9d235",
+        "startedAt": "2026-11-05T21:18:48.754Z",
+        "durationMs": 10178,
+        "requestId": null
+      },
+      {
+        "id": "e039ee6e-c6dd-4ff5-9819-b952bcb860b0",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:18:58.943Z",
+        "kind": "capture_requested",
+        "provenance": "sandbox",
+        "requestId": "14d5cce7-2094-4725-bd45-d3035b4ea31d",
+        "explicitUserAction": true,
+        "recovery": false
+      },
+      {
+        "id": "78f7c63c-f995-425c-a166-449a00193ada",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:19:00.734Z",
+        "kind": "response",
+        "provenance": "sandbox",
+        "operation": "capture",
+        "method": "POST",
+        "path": "/v2/checkout/orders/3BJ25238B3250332R/capture",
+        "httpStatus": 201,
+        "response": {
+          "id": "3BJ25238B3250332R",
+          "intent": "CAPTURE",
+          "status": "COMPLETED",
+          "purchase_units": [
+            {
+              "reference_id": "be3dc1c4-381a-468b-98a9-cc27ffcadcca",
+              "amount": {
+                "currency_code": "USD",
+                "value": "12.00"
+              },
+              "payments": {
+                "captures": [
+                  {
+                    "id": "19J28426P63189117",
+                    "status": "COMPLETED",
+                    "amount": {
+                      "currency_code": "USD",
+                      "value": "12.00"
+                    },
+                    "final_capture": true,
+                    "create_time": "2026-11-05T21:18:59Z",
+                    "update_time": "2026-11-05T21:18:59Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "create_time": "2026-11-05T21:13:07Z",
+          "update_time": "2026-11-05T21:19:00Z"
+        },
+        "debugId": "f67264147fa19",
+        "responseHash": "967fba8b10e93a9d9f730a28e60908e71661e53cf6feea63403fd900f32b11f0",
+        "startedAt": "2026-11-05T21:18:58.965Z",
+        "durationMs": 1769,
+        "requestId": "14d5cce7-2094-4725-bd45-d3035b4ea31d",
+        "deliveredToCheckout": true
+      },
+      {
+        "id": "23cb3b8d-ff5d-4234-bd2c-babd202eccd2",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:19:00.747Z",
+        "kind": "merchant_effect",
+        "provenance": "sandbox",
+        "captureId": "19J28426P63189117",
+        "message": "Receipt recorded once for this checkout."
+      },
+      {
+        "id": "8f5ddfb8-9b02-48ed-a9bb-3f201e8b981d",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:19:01.183Z",
+        "kind": "webhook_replay",
+        "provenance": "local_webhook_replay",
+        "eventId": "REPLAY-3BJ25238B3250332R-19J28426P63189117",
+        "captureId": "19J28426P63189117",
+        "message": "Local delivery replay from the capture evidence. This is not a PayPal webhook."
+      },
+      {
+        "id": "ad532227-f27f-47bf-8a0f-c09cd090039d",
+        "traceId": "d6b6a0b2e9354eea81f2d8e99323709a",
+        "orderId": "3BJ25238B3250332R",
+        "at": "2026-11-05T21:19:01.190Z",
+        "kind": "webhook_duplicate",
+        "provenance": "local_webhook_replay",
+        "eventId": "REPLAY-3BJ25238B3250332R-19J28426P63189117",
+        "captureId": "19J28426P63189117",
+        "message": "Second local delivery ignored. No additional receipt."
+      }
+    ],
+    "orderId": "3BJ25238B3250332R",
+    "approvalUrl": "https://www.sandbox.paypal.com/checkoutnow?token=3BJ25238B3250332R",
+    "attempt": {
+      "requestId": "14d5cce7-2094-4725-bd45-d3035b4ea31d",
+      "state": "completed",
+      "recovery": false
+    },
+    "recoveryUsed": false,
+    "initialUsed": true,
+    "state": {
+      "state": "captured",
+      "reason": "A completed capture matches this order, amount and checkout.",
+      "captureId": "19J28426P63189117",
+      "evidenceIds": [
+        "78f7c63c-f995-425c-a166-449a00193ada"
+      ]
+    },
+    "effects": [
+      {
+        "capture_id": "19J28426P63189117"
+      }
+    ]
+  }
+}

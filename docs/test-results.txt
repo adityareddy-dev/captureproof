@@ -2,18 +2,18 @@
 > captureproof@0.1.0 test
 > node --test test/*.test.mjs
 
-✔ lost response preserves gateway evidence and reconciles one merchant receipt (7.320177ms)
-✔ duplicate deliveries never repeat capture or fulfillment (2.47749ms)
-✔ failed capture requires explicit recovery and fresh buyer approval (5.785741ms)
-✔ concurrent capture clicks result in one request (1.953537ms)
-✔ ambiguous network failure stays blocked after process restart (1281.048545ms)
-✔ missing, pending, wrong-order, wrong-amount and conflicting evidence remain unresolved (2.991712ms)
-✔ state mismatch, unknown citations and unsupported duplicate findings are rejected (2.250449ms)
-✔ model failures and malicious output fall back without any payment action (1.780846ms)
-✔ saved evidence excludes credentials and customer fields (0.482411ms)
-✔ PayPal uses sandbox only, stable request ID, no negative-test header (20.805235ms)
-✔ unverified webhook cannot create a merchant receipt (1.357976ms)
-✔ HTTP core path, evidence export and local request protections (53.457714ms)
+✔ lost response preserves gateway evidence and reconciles one merchant receipt (14.345586ms)
+✔ duplicate deliveries never repeat capture or fulfillment (3.616304ms)
+✔ failed capture requires explicit recovery and fresh buyer approval (3.603344ms)
+✔ concurrent capture clicks result in one request (2.212909ms)
+✔ ambiguous network failure stays blocked after process restart (113.758961ms)
+✔ missing, pending, wrong-order, wrong-amount and conflicting evidence remain unresolved (2.862741ms)
+✔ state mismatch, unknown citations and unsupported duplicate findings are rejected (2.187159ms)
+✔ model failures and malicious output fall back without any payment action (1.525577ms)
+✔ saved evidence excludes credentials and customer fields (0.524732ms)
+✔ PayPal uses sandbox only, stable request ID, no negative-test header (23.864412ms)
+✔ unverified webhook cannot create a merchant receipt (1.812097ms)
+✔ HTTP core path, evidence export and local request protections (94.395986ms)
 ℹ tests 12
 ℹ suites 0
 ℹ pass 12
@@ -21,4 +21,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1423.085952
+ℹ duration_ms 329.669648

@@ -13,7 +13,7 @@
   <main>
     <header><div><div class="eyebrow">CHECKOUT OBSERVABILITY</div><h1>Know what happened.<br>Before you retry.</h1><p>Follow the request, inspect the payment, choose the next step.</p></div><div class="connection"><span class="dot"></span> <span id="access">Checking access</span></div></header>
     <section class="setup" aria-label="Start a checkout">
-      <div><label for="mode">ENVIRONMENT</label><select id="mode"><option value="rehearsal">Synthetic rehearsal</option value="sandbox">PayPal sandbox</option></select></div>
+      <div><label for="mode">ENVIRONMENT</label><select id="mode"><option value="rehearsal">Synthetic rehearsal</option><option value="sandbox">PayPal sandbox</option></select></div>
       <div class="fixture"><label for="fixture">FAILURE TO INVESTIGATE</label><select id="fixture"><option value="lost-response">01 · Capture succeeds, response is lost</option><option value="duplicate-webhook">02 · The same webhook arrives twice</option><option value="failed-capture">03 · Capture rejected before buyer approval</option></select></div>
       <button id="create" class="primary">Start checkout <span>↗</span></button>
     </section>
