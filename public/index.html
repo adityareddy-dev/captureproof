@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CaptureProof | Checkout investigation</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="mark">C</span> CaptureProof</a>
+    <div class="workspace">MERCHANT WORKSPACE</div>
+    <div class="nav selected"><span>◉</span> Checkout investigation</div>
+    <div class="sidebar-note"><span class="dot"></span> Local environment<br><small>Sandbox payments only</small></div>
+    <div class="recent-label">RECENT CHECKOUTS</div><div id="recent"></div>
+    <footer>One order. Every piece of evidence.</footer>
+  </aside>
+  <main>
+    <header><div><div class="eyebrow">CHECKOUT OBSERVABILITY</div><h1>Know what happened.<br>Before you retry.</h1><p>Follow the request, inspect the payment, choose the next step.</p></div><div class="connection"><span class="dot"></span> <span id="access">Checking access</span></div></header>
+    <section class="setup" aria-label="Start a checkout">
+      <div><label for="mode">ENVIRONMENT</label><select id="mode"><option value="rehearsal">Synthetic rehearsal</option value="sandbox">PayPal sandbox</option></select></div>
+      <div class="fixture"><label for="fixture">FAILURE TO INVESTIGATE</label><select id="fixture"><option value="lost-response">01 · Capture succeeds, response is lost</option><option value="duplicate-webhook">02 · The same webhook arrives twice</option><option value="failed-capture">03 · Capture rejected before buyer approval</option></select></div>
+      <button id="create" class="primary">Start checkout <span>↗</span></button>
+    </section>
+    <div id="notice" class="notice" role="status">Rehearsal uses synthetic responses. No PayPal request or payment is made.</div>
+    <div id="error" class="error" role="alert" hidden></div>
+    <div id="empty" class="empty"><div class="empty-icon">⌁</div><h2>A timeout isn’t a payment state.</h2><p>Start a checkout to trace a failure from the first request to the recovery decision.</p><div class="empty-steps"><span>01 &nbsp; Trigger a failure</span><span>02 &nbsp; Follow the evidence</span><span>03 &nbsp; Recover with a state check</span></div></div>
+    <div id="checkout" hidden>
+      <div class="checkout-heading"><div><span class="eyebrow">ACTIVE CHECKOUT</span><h2 id="title"></h2></div><a id="export" class="text-button">Download evidence ↓</a></div>
+      <div class="metrics"><div><label>PAYMENT STATE</label><strong id="payment"></strong></div><div><label>ORDER</label><strong id="order" class="mono"></strong></div><div><label>AMOUNT</label><strong>$12.00 <small>USD · sandbox</small></strong></div><div><label>MERCHANT RECEIPTS</label><strong id="effects"></strong></div></div>
+      <div class="columns">
+        <section class="panel"><div class="panel-heading"><h2>Request timeline</h2><span id="event-count" class="count"></span></div><p class="panel-subtitle" id="trace"></p><div id="timeline"></div></section>
+        <div class="right-column"><section class="panel investigation"><div class="panel-heading"><h2>Investigate</h2><span class="pill">Evidence required</span></div><p class="panel-subtitle">Ask why it failed and what the records support.</p><form id="ask-form"><label for="question" class="sr-only">Question about the checkout</label><textarea id="question" maxlength="600">Should I repeat the payment?</textarea><button id="ask" class="primary">Investigate this checkout <span>↗</span></button></form><div id="analysis" aria-live="polite"></div></section>
+        <section class="panel actions"><div class="panel-heading"><h2>Checkout actions</h2><span class="pill">Explicit action</span></div><p id="action-help" class="panel-subtitle"></p><div id="buttons"></div><p class="fine">Every capture checks the order again. An investigation cannot run a payment action.</p></section></div>
+      </div>
+    </div>
+  </main><script src="/app.js" type="module"></script>
+</body></html>
