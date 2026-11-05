@@ -55,6 +55,8 @@ CAPTUREPROOF_ENV=/absolute/private/path npm start
 
 Verify access with `npm run access`. It prints only status codes and model names. It does not print credentials. Missing sandbox access produces a nonzero exit code even when the model works.
 
+For this build, the private credential file is `/home/paperclip/.config/captureproof/env`. Start with `CAPTUREPROOF_ENV=/home/paperclip/.config/captureproof/env npm start` to use it.
+
 Restart the app after changing configuration. Select **PayPal sandbox** before creating a checkout. For the two successful-capture cases, open the buyer approval link, approve with a **sandbox buyer**, return to the console, and explicitly capture. For the rejected-capture case, first try capture before approval. Inspect the actual rejection, open buyer approval for the same order, return, and click recovery. Each capture requests a fresh order lookup first. A return URL alone is never treated as proof of approval.
 
 Every payment request uses `https://api-m.sandbox.paypal.com`. There is no production endpoint setting and no negative-test header. The amount is fixed at USD 12.00 in test funds. The request trace retains the HTTP status, redacted response, PayPal debug ID when supplied, request ID, timestamps and duration. Response hashes cover retained fields, not the unredacted response.
@@ -88,5 +90,13 @@ State is stored in `data/captureproof.sqlite`, which is excluded from Git. Stop 
 Each investigation finding links to its matching response or trace event. Use **Download evidence** to save a redacted checkout bundle. A gateway response withheld by the transport fixture is explicitly marked as not delivered to the checkout. The injected fault has its own provenance label. Local webhook replay has a different label from verified PayPal delivery.
 
 [The demo script](docs/demo-script.md) specifies the intended recording under three minutes. [The submission draft](docs/entry-draft.md) is a working draft pending sandbox evidence and final video. [The technical notes](docs/design.md) map the implementation to the judging criteria.
+
+After completing all three fixtures in sandbox, reconcile and investigate the lost-response case, then export and check the latest sandbox run of each fixture:
+
+```sh
+node scripts/verify-sandbox.mjs
+```
+
+This reads the running local application and sends no payment requests. It requires one completed capture and one receipt per case, the real pre-approval rejection followed by explicit recovery, separately labelled fault and delivery replay, and a current model investigation with evidence citations. Synthetic rehearsal cannot satisfy it. On success it writes redacted bundles and a verification report under `docs/private/sandbox-evidence/`, excluded from Git until the evidence is reviewed.
 
 MIT licensed.
