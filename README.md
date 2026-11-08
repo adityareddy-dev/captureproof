@@ -38,7 +38,7 @@ The local webhook replay is a delivery test built from the capture record, not a
 
 ## PayPal sandbox
 
-Create a free sandbox REST app in the [PayPal developer dashboard](https://developer.paypal.com/dashboard/applications/sandbox). Have a sandbox buyer account ready to approve the test order. Guest checkout also works with a card from the [sandbox card generator](https://developer.paypal.com/sandbox-testing/card-testing). Use generated cards, test buyer details and test funds only. If a published static card is rejected, generate a new sandbox card. Guest checkout may appear under **Pay with Debit or Credit Card** or **Create an Account**. Turn off **Save info & create your PayPal account** to complete approval as a guest. Store configuration in a private file outside this checkout, for example `/home/paperclip/.hackathons/env`, with file permissions `600`:
+Create a free sandbox REST app in the [PayPal developer dashboard](https://developer.paypal.com/dashboard/applications/sandbox). Have a sandbox buyer account ready to approve the test order. Guest checkout also works with a card from the [sandbox card generator](https://developer.paypal.com/sandbox-testing/card-testing). Use generated cards, test buyer details and test funds only. If a published static card is rejected, generate a new sandbox card. Guest checkout may appear under **Pay with Debit or Credit Card** or **Create an Account**. Turn off **Save info & create your PayPal account** to complete approval as a guest. Store configuration in a private file outside this checkout, for example `~/.hackathons/env`, with file permissions `600`:
 
 ```text
 PAYPAL_CLIENT_ID=<sandbox app client ID>
@@ -47,15 +47,13 @@ GEMINI_API_KEY=<key from a project on the free tier>
 GEMINI_FREE_TIER_CONFIRMED=yes
 ```
 
-The default credential path is `/home/paperclip/.hackathons/env`. To use another private file:
+The default credential path is `~/.hackathons/env`. To use another private file:
 
 ```sh
 CAPTUREPROOF_ENV=/absolute/private/path npm start
 ```
 
 Verify access with `npm run access`. It prints only status codes and model names. It does not print credentials. Missing sandbox access produces a nonzero exit code even when the model works.
-
-For this build, the private credential file is `/home/paperclip/.config/captureproof/env`. Start with `CAPTUREPROOF_ENV=/home/paperclip/.config/captureproof/env npm start` to use it.
 
 Restart the app after changing configuration. Select **PayPal sandbox** before creating a checkout. For the two successful-capture cases, open the buyer approval link, approve with a **sandbox buyer**, return to the console, and explicitly capture. For the rejected-capture case, first try capture before approval. Inspect the actual rejection, open buyer approval for the same order, return, and click recovery. Each capture requests a fresh order lookup first. A return URL alone is never treated as proof of approval.
 
@@ -91,7 +89,7 @@ State is stored in `data/captureproof.sqlite`, which is excluded from Git. Stop 
 
 Each investigation finding links to its matching response or trace event. Use **Download evidence** to save a redacted checkout bundle. A gateway response withheld by the transport fixture is explicitly marked as not delivered to the checkout. The injected fault has its own provenance label. Local webhook replay has a different label from verified PayPal delivery.
 
-[The demo script](docs/demo-script.md) describes the recorded sandbox demonstration, with [exact timed captions](docs/demo-captions.vtt). [The submission text](docs/entry-draft.md) is ready for review. Public repository and YouTube publication follow that review. [The technical notes](docs/design.md) map the implementation to the judging criteria.
+[The demo script](docs/demo-script.md) describes the recorded sandbox demonstration, with [exact timed captions](docs/demo-captions.vtt). [The submission text](docs/entry-draft.md) is the draft entry. [The technical notes](docs/design.md) map the implementation to the judging criteria.
 
 After completing all three fixtures in sandbox, reconcile and investigate the lost-response case, then export and check the latest sandbox run of each fixture:
 

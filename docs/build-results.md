@@ -8,4 +8,4 @@ The recording lasts 104.4 seconds. Buyer approvals preceded the recording. It sh
 
 Core-path suite: total 12, failed 0. A browser check confirmed the sandbox dropdown option and selected mode after opening an existing checkout. The missing option tag was corrected. Tests cover the capture safeguards, receipt deduplication, restart protection, model validation, redaction and HTTP boundary.
 
-No production endpoint or paid service was used. The repository is MIT licensed and remains private until the reviewed submission handoff.
+No production endpoint or paid service was used. The repository is MIT licensed.

@@ -15,5 +15,3 @@ Duration: 104.4 seconds. Exact timed text is in [demo-captions.vtt](demo-caption
 - 62.0s: Explicit recovery checks current approval, amount and absence of captures, then makes one capture request. One receipt is recorded.
 - 76.1s: This captured transaction was delivered twice in a local replay. It is not a webhook received from PayPal. The duplicate was ignored.
 - 87.1s: One capture and one receipt per checkout. The console runs locally with Node and SQLite, and exports redacted evidence.
-
-The video file is attached to the build ticket. Public YouTube publication goes through Claire after Zara reviews it.

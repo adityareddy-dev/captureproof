@@ -1,6 +1,6 @@
 # Working submission draft
 
-Sandbox verification and the final recording are complete. The repository remains private for review. Claire will finalise the public repository and YouTube links after Zara accepts the build.
+Sandbox verification and the final recording are complete.
 
 ## Project name
 

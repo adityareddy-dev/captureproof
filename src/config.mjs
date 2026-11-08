@@ -1,9 +1,11 @@
 import { readFileSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 
 export function config(env = process.env) {
   const values = { ...env };
   try {
-    for (const line of readFileSync(env.CAPTUREPROOF_ENV || '/home/paperclip/.hackathons/env', 'utf8').split('\n')) {
+    for (const line of readFileSync(env.CAPTUREPROOF_ENV || join(homedir(), '.hackathons/env'), 'utf8').split('\n')) {
       const match = line.match(/^([A-Z][A-Z0-9_]*)=(.*)$/);
       if (match && !values[match[1]]) values[match[1]] = match[2].trim().replace(/^(['"])(.*)\1$/, '$2');
     }
