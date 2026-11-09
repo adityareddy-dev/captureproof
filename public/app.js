@@ -59,17 +59,29 @@ function renderTimeline() {
 function button(text, action, data = {}) { const b = node('button', text); b.onclick = () => run(async () => show(await api(`/api/checkouts/${active.id}/${action}`, data))); return b; }
 function renderActions() {
   const div = $('buttons'); div.replaceChildren();
+  if (!active.orderId) {
+    $('action-help').textContent = 'No order was created. Check access and start a new checkout.';
+    return;
+  }
   const state = active.state.state;
   const delivered = active.events.some(e => e.kind === 'transport_injected' || e.kind === 'transport_error' && e.operation === 'capture');
-  const needsApproval = !active.events.some(e => e.kind === 'response' && e.response?.status === 'APPROVED');
-  $('action-help').textContent = state === 'captured' ? 'A matching completed capture exists. Another capture is blocked.' : state === 'failed' ? 'The request failed before approval. Approve the same sandbox order, then recover explicitly.' : delivered ? 'The checkout timed out. Reconcile the order before deciding what to do.' : 'Use buyer approval for a successful capture. The rejection fixture deliberately tries capture before approval.';
+  const latestOrder = active.events.findLast(e => e.operation === 'get' && ['response', 'transport_error'].includes(e.kind));
+  const approved = latestOrder?.httpStatus === 200 && latestOrder.response?.status === 'APPROVED';
+  const rehearsal = active.mode === 'rehearsal';
+  $('action-help').textContent = state === 'captured'
+    ? active.effects.length ? 'A matching completed capture exists. One receipt is recorded. Another capture is blocked.' : 'The gateway recorded a completed capture, but the checkout lost its response. Reconcile to record the receipt without another capture.'
+    : delivered ? 'The checkout timed out. Reconcile the order before deciding what to do.'
+    : state === 'failed' ? approved ? 'Buyer approval is recorded for the same order. Request recovery to complete the checkout.' : rehearsal ? 'The request was rejected before approval. Simulate buyer approval, then request recovery.' : 'The request was rejected before approval. Approve the same order in the PayPal tab, then check buyer approval here.'
+    : approved ? 'Buyer approval is recorded. Capture explicitly to continue the selected case.'
+    : active.fixture === 'failed-capture' ? 'Try capture before approval to record the rejection. No payment can complete until the buyer approves.'
+    : rehearsal ? 'Simulate buyer approval first. Then capture to continue the selected case.' : 'Open buyer approval in a separate PayPal tab. Return here and check buyer approval before capture.';
   if (state !== 'captured') {
-    if (active.mode === 'rehearsal' && needsApproval && (active.fixture !== 'failed-capture' || state === 'failed')) div.append(button('Simulate buyer approval', 'approve'));
-    if (active.mode === 'sandbox' && active.approvalUrl) { const a = node('a', 'Open PayPal sandbox buyer approval ↗'); a.href = active.approvalUrl; a.rel = 'noreferrer'; div.append(a); }
-    if (!active.initialUsed) div.append(button(active.fixture === 'failed-capture' ? 'Try capture before approval' : 'Capture $12.00 in test funds', 'capture', { confirm: 'capture-sandbox-payment' }));
-    if (state === 'failed' && !active.recoveryUsed) div.append(button('Recover: capture approved sandbox order', 'capture', { confirm: 'capture-sandbox-payment', recover: true }));
+    if (rehearsal && !approved && (!active.initialUsed || state === 'failed') && (active.fixture !== 'failed-capture' || state === 'failed')) div.append(button('Simulate buyer approval', 'approve'));
+    if (!rehearsal && !approved && active.approvalUrl) { const a = node('a', 'Open PayPal sandbox buyer approval ↗'); a.href = active.approvalUrl; a.target = '_blank'; a.rel = 'noopener noreferrer'; div.append(a); }
+    if (!active.initialUsed && (approved || active.fixture === 'failed-capture')) div.append(button(active.fixture === 'failed-capture' && !approved ? 'Try capture before approval' : rehearsal ? 'Simulate $12.00 capture' : 'Capture $12.00 in test funds', 'capture', { confirm: 'capture-sandbox-payment' }));
+    if (state === 'failed' && approved && !active.recoveryUsed) div.append(button(rehearsal ? 'Recover: simulate capture' : 'Recover: capture approved sandbox order', 'capture', { confirm: 'capture-sandbox-payment', recover: true }));
   }
-  div.append(button('Reconcile order state', 'reconcile'));
+  div.append(button(!rehearsal && !approved && state !== 'captured' && !delivered ? 'Check buyer approval' : 'Reconcile order state', 'reconcile'));
   if (active.fixture === 'duplicate-webhook' && state === 'captured') div.append(button('Replay the same delivery twice locally', 'duplicate'));
 }
 async function show(session) {
@@ -80,6 +92,7 @@ async function show(session) {
   $('payment').textContent = session.state.state === 'captured' ? 'Captured' : session.state.state === 'failed' ? 'Request failed' : 'Unresolved';
   $('payment').className = `badge ${session.state.state}`;
   $('effects').textContent = `${session.effects.length} recorded`;
+  $('amount-context').textContent = session.mode === 'rehearsal' ? 'USD · synthetic' : 'USD · sandbox';
   $('trace').textContent = `Trace ${session.traceId.slice(0, 16)} · one checkout, one order`;
   $('export').href = `/api/checkouts/${session.id}/export`; $('export').download = `${session.fixture}-${session.id}.json`;
   notice(); renderTimeline(); renderAnalysis(); renderActions(); await recent();
