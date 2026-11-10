@@ -21,10 +21,9 @@ async function loseRecovery(checkout, remote) {
 
 test('recovery response loss supersedes rejection across restart until reconciliation', async t => {
   const dir = mkdtempSync(join(tmpdir(), 'captureproof-recovery-'));
-  t.after(() => rmSync(dir, { recursive: true, force: true }));
   const path = join(dir, 'state.sqlite');
   let store = new Store(path);
-  t.after(() => store.close());
+  t.after(() => { store.close(); rmSync(dir, { recursive: true, force: true }); });
   const remote = new Rehearsal();
   let checkout = new Checkout(store, {}, remote);
   const lost = await loseRecovery(checkout, remote);
